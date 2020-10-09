@@ -5,11 +5,14 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start": "server.js"
+    "start": "server.js",
+    "dev": "nodemon"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "jest": "^26.5.2",
+    "nodemon": "^2.0.4"
   }
 }
