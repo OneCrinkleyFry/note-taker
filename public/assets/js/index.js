@@ -56,10 +56,11 @@ var handleNoteSave = function() {
     text: $noteText.val()
   };
 
-  saveNote(newNote).then(function(data) {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  saveNote(newNote)
+    .then(function() {
+      getAndRenderNotes()
+      renderActiveNote();
+    })
 };
 
 // BONUS Delete the clicked note
@@ -75,10 +76,11 @@ var handleNoteDelete = function(event) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(function() {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  deleteNote(note.id)
+    .then( data => {
+      getAndRenderNotes();
+      renderActiveNote();
+    })
 };
 
 // Sets the activeNote and displays it
@@ -106,7 +108,7 @@ var handleRenderSaveBtn = function() {
 // Render's the list of note titles
 var renderNoteList = function(notes) {
   $noteList.empty();
-
+  console.log
   var noteListItems = [];
 
   for (var i = 0; i < notes.length; i++) {

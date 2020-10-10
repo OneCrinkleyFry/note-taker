@@ -1,15 +1,14 @@
 //dependencies
-const notes = require('../../db/db.json');
 const router = require('express').Router();
 
-const { validateNote, createNote, deleteNotes } = require('../../lib/notes.js');
+const { validateNote, createNote, deleteNote, readNotes } = require('../../lib/notes.js');
 
 //get handler for the notes api
 router.get('/notes', (req, res) => {
     //gets the data from the notes array
-    let results = notes;
+    const { notes } = readNotes();
     //and sends it to the user.
-    res.json(results);
+    res.send(notes);
 });
 
 //post handler for the notes api
@@ -25,16 +24,21 @@ router.post('/notes', (req, res) => {
         //otherwise
     } else {
         //create a note
-        const note = createNote(req.body, notes);
+        const { notes:current } = readNotes();
+        const note = createNote(req.body, current);
         //and send it back as a response.
         res.send(note);
     }
 });
 
-//delete hadler for the notes api that uses the id as the paramater
+//delete handler for the notes api that uses the id as the paramater
 router.delete('/notes/:id', (req, res) => {
-    deleteNotes(req.params.id, notes);
-    res.send(`DELETE request to ${req.params.id}`);
+    const { notes:current } = readNotes();
+    deleteNote(req.params.id, current)
+        .then((data) => {
+            res.send(data)
+        })
+        .catch(_err_ => res.status(500).json(err));
 });
 
 //exports
